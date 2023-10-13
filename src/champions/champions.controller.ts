@@ -21,7 +21,7 @@ export class ChampionsController {
   }
 
   @Get(':id')
-  getOne(@Param('id') championId: string): Champion {
+  getOne(@Param('id') championId: number): Champion {
     return this.championsService.getOne(championId);
   }
 
@@ -31,12 +31,12 @@ export class ChampionsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') championId: string) {
+  remove(@Param('id') championId: number) {
     return this.championsService.deleteOne(championId);
   }
 
   @Patch(':id')
-  patch(@Param('id') championId: string, @Body() updateData) {
+  patch(@Param('id') championId: number, @Body() updateData) {
     return this.championsService.update(championId, updateData);
   }
 }

@@ -10,17 +10,17 @@ export class ChampionsService {
     return this.champions;
   }
 
-  getOne(id: string): Champion {
-    const champion = this.champions.find((champion) => champion.id === +id);
+  getOne(id: number): Champion {
+    const champion = this.champions.find((champion) => champion.id === id);
     if (!champion) {
       throw new NotFoundException(`Champion with ID ${id} not found.`);
     }
     return champion;
   }
 
-  deleteOne(id: string) {
+  deleteOne(id: number) {
     this.getOne(id);
-    this.champions = this.champions.filter((champion) => champion.id !== +id);
+    this.champions = this.champions.filter((champion) => champion.id !== id);
   }
 
   create(championData: CreateChampionDto) {
@@ -30,7 +30,7 @@ export class ChampionsService {
     });
   }
 
-  update(id: string, updateData: CreateChampionDto) {
+  update(id: number, updateData: CreateChampionDto) {
     const champion = this.getOne(id);
     this.deleteOne(id);
     this.champions.push({ ...champion, ...updateData });
