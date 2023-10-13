@@ -19,6 +19,32 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(200)
-      .expect('Hello World!');
+      .expect('Welcome to my champion home');
+  });
+
+  describe('/champions', () => {
+    it('GET', () => {
+      return request(app.getHttpServer())
+        .get('/champions')
+        .expect(200)
+        .expect([]);
+    });
+
+    it('POST', () => {
+      return request(app.getHttpServer())
+        .post('/champions')
+        .send({
+          name: '아칼리',
+          passive: '암살자의 표식',
+          q: '오연투척검',
+          w: '황혼의 장막',
+          e: '표창곡예',
+          r: '무결처형',
+        })
+        .expect(201);
+    });
+    it('DELETE', () => {
+      return request(app.getHttpServer()).delete('/champions').expect(404);
+    });
   });
 });
