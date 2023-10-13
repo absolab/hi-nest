@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Champion } from './entities/champion.entity';
+import { CreateChampionDto } from './dto/create-champion.dto';
 
 @Injectable()
 export class ChampionsService {
@@ -10,18 +11,28 @@ export class ChampionsService {
   }
 
   getOne(id: string): Champion {
-    return this.champions.find((champion) => champion.id === +id);
+    const champion = this.champions.find((champion) => champion.id === +id);
+    if (!champion) {
+      throw new NotFoundException(`Champion with ID ${id} not found.`);
+    }
+    return champion;
   }
 
-  deleteOne(id: string): boolean {
-    this.champions.filter((champion) => champion.id !== +id);
-    return true;
+  deleteOne(id: string) {
+    this.getOne(id);
+    this.champions = this.champions.filter((champion) => champion.id !== +id);
   }
 
-  create(championData: Champion) {
+  create(championData: CreateChampionDto) {
     this.champions.push({
       id: this.champions.length + 1,
       ...championData,
     });
+  }
+
+  update(id: string, updateData: CreateChampionDto) {
+    const champion = this.getOne(id);
+    this.deleteOne(id);
+    this.champions.push({ ...champion, ...updateData });
   }
 }

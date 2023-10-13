@@ -9,6 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { Champion } from './entities/champion.entity';
+import { CreateChampionDto } from './dto/create-champion.dto';
 
 @Controller('champions')
 export class ChampionsController {
@@ -25,7 +26,7 @@ export class ChampionsController {
   }
 
   @Post()
-  create(@Body() championData) {
+  create(@Body() championData: CreateChampionDto) {
     return this.championsService.create(championData);
   }
 
@@ -36,9 +37,6 @@ export class ChampionsController {
 
   @Patch(':id')
   patch(@Param('id') championId: string, @Body() updateData) {
-    return {
-      updatedChampion: championId,
-      ...updateData,
-    };
+    return this.championsService.update(championId, updateData);
   }
 }
