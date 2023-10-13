@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { Champion } from './entities/champion.entity';
 import { CreateChampionDto } from './dto/create-champion.dto';
+import { UpdateChampionDto } from './dto/update-champion.dto';
 
 @Controller('champions')
 export class ChampionsController {
@@ -36,7 +37,10 @@ export class ChampionsController {
   }
 
   @Patch(':id')
-  patch(@Param('id') championId: number, @Body() updateData) {
+  patch(
+    @Param('id') championId: number,
+    @Body() updateData: UpdateChampionDto,
+  ) {
     return this.championsService.update(championId, updateData);
   }
 }

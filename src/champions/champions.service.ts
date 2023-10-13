@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Champion } from './entities/champion.entity';
 import { CreateChampionDto } from './dto/create-champion.dto';
+import { UpdateChampionDto } from './dto/update-champion.dto';
 
 @Injectable()
 export class ChampionsService {
@@ -30,7 +31,7 @@ export class ChampionsService {
     });
   }
 
-  update(id: number, updateData: CreateChampionDto) {
+  update(id: number, updateData: UpdateChampionDto) {
     const champion = this.getOne(id);
     this.deleteOne(id);
     this.champions.push({ ...champion, ...updateData });

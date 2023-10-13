@@ -17,5 +17,6 @@ export class CreateChampionDto {
   /*
   @IsNumber()
   @IsString({each:true}) -> 배열 검사
+  @IsOptional()
   */
 }
