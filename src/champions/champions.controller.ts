@@ -1,3 +1,4 @@
+import { ChampionsService } from './champions.service';
 import {
   Body,
   Controller,
@@ -6,34 +7,31 @@ import {
   Param,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
+import { Champion } from './entities/champion.entity';
 
 @Controller('champions')
 export class ChampionsController {
-  @Get()
-  getAll() {
-    return 'This will retrun all champions';
-  }
+  constructor(private readonly championsService: ChampionsService) {}
 
-  @Get('search')
-  search(@Query('name') searchingName: string) {
-    return `We are searching for a champion made after: ${searchingName}`;
+  @Get()
+  getAll(): Champion[] {
+    return this.championsService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') championId: string) {
-    return `This will return one champions with the id: ${championId}`;
+  getOne(@Param('id') championId: string): Champion {
+    return this.championsService.getOne(championId);
   }
 
   @Post()
   create(@Body() championData) {
-    return championData;
+    return this.championsService.create(championData);
   }
 
   @Delete(':id')
   remove(@Param('id') championId: string) {
-    return `This will delete a champion with the id: ${championId}`;
+    return this.championsService.deleteOne(championId);
   }
 
   @Patch(':id')
